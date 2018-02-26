@@ -1,12 +1,15 @@
 package com.example.moham.popularmovie.movie;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by moham on 2/20/2018.
  */
 
-public class MovieDetails implements Serializable{
+public class MovieDetails implements Parcelable {
 
 
     private String title;
@@ -62,4 +65,39 @@ public class MovieDetails implements Serializable{
     public void setDate(String date) {
         this.date = date;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.poster);
+        dest.writeString(this.overview);
+        dest.writeString(this.user_rating);
+        dest.writeString(this.date);
+    }
+
+    protected MovieDetails(Parcel in) {
+        this.title = in.readString();
+        this.poster = in.readString();
+        this.overview = in.readString();
+        this.user_rating = in.readString();
+        this.date = in.readString();
+    }
+
+    public static final Parcelable.Creator<MovieDetails> CREATOR = new Parcelable.Creator<MovieDetails>() {
+        @Override
+        public MovieDetails createFromParcel(Parcel source) {
+            return new MovieDetails(source);
+        }
+
+        @Override
+        public MovieDetails[] newArray(int size) {
+            return new MovieDetails[size];
+        }
+    };
 }

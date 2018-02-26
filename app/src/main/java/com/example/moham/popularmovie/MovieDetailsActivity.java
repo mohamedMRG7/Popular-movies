@@ -1,5 +1,6 @@
 package com.example.moham.popularmovie;
 
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -8,28 +9,31 @@ import android.widget.TextView;
 import com.example.moham.popularmovie.movie.MovieDetails;
 import com.squareup.picasso.Picasso;
 
-public class MovieDetails_activity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private TextView overview,userRating,date;
-    private ImageView poster;
+public class MovieDetailsActivity extends AppCompatActivity {
+
+
+    @BindView(R.id.tv_overview) TextView overView;
+    @BindView(R.id.tv_rating) TextView userRating;
+    @BindView(R.id.tv_releasedate)TextView date;
+    @BindView(R.id.img_moiveposter)ImageView poster;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        MovieDetails details= (MovieDetails) getIntent().getSerializableExtra(MainActivity.MOVIE_INTENT_KEY);
+        ButterKnife.bind(this);
+        MovieDetails details= (MovieDetails) getIntent().getParcelableExtra(MainActivity.MOVIE_INTENT_KEY);
         setTitle(details.getTitle());
 
-        overview=findViewById(R.id.tv_overview);
-        overview.setText(details.getOverview());
+        overView.setText(details.getOverview());
 
-        userRating=findViewById(R.id.tv_rating);
         userRating.setText(details.getUser_rating());
 
-        date=findViewById(R.id.tv_releasedate);
         date.setText(details.getDate());
 
-        poster=findViewById(R.id.img_moiveposter);
         Picasso.with(this).load(details.getPoster()).into(poster);
     }
 }

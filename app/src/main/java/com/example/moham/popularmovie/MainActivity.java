@@ -13,11 +13,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.moham.popularmovie.adapter.MoviesAdapter;
+import com.example.moham.popularmovie.background.BackGroundTask;
 import com.example.moham.popularmovie.dp_response.JsonUtilies;
 import com.example.moham.popularmovie.dp_response.NetworkUtilies;
 import com.example.moham.popularmovie.movie.MovieDetails;
 
-public class MainActivity extends AppCompatActivity implements MoviesAdapter.onitemClick,NetworkUtilies.JsonRespons{
+public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnItemClick,BackGroundTask.JsonRespons{
 
     private RecyclerView movies;
     private MoviesAdapter adapter;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.oni
 
      if (!NetworkUtilies.API_KEY.isEmpty())
      {   if (isOnline())
-         NetworkUtilies.MovieDpresponse(NetworkUtilies.SORT_POPULAR, this);
+         BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_POPULAR, this);
 
         else Toast.makeText(this,"Please check your internet connecton and try again ",Toast.LENGTH_LONG).show();
 
@@ -64,9 +65,9 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.oni
 
 
     @Override
-    public void onclick(int position) {
+    public void onClick(int position) {
         MovieDetails movieDetails= JsonUtilies.getmovieDetails(jsonString,position);
-       Intent intent=new Intent(MainActivity.this,MovieDetails_activity.class);
+       Intent intent=new Intent(MainActivity.this,MovieDetailsActivity.class);
        intent.putExtra(MOVIE_INTENT_KEY,movieDetails);
        startActivity(intent);
     }
@@ -100,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.oni
         int id=item.getItemId();
         switch (id) {
             case R.id.menu_popular:
-                NetworkUtilies.MovieDpresponse(NetworkUtilies.SORT_POPULAR,this);
+                BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_POPULAR,this);
                 break;
             case R.id.menu_rate:
-                NetworkUtilies.MovieDpresponse(NetworkUtilies.SORT_TOPRATED,this);
+                BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_TOPRATED,this);
 
         }
 

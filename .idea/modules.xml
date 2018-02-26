@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Popular movie.iml" filepath="$PROJECT_DIR$/Popular movie.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/popularMovie.iml" filepath="$PROJECT_DIR$/popularMovie.iml" />
+      <module fileurl="file://H:\NanoDegree scolarship projects\Popular movie\app\app.iml" filepath="H:\NanoDegree scolarship projects\Popular movie\app\app.iml" />
+      <module fileurl="file://H:\NanoDegree scolarship projects\Popular movie\popularMovie.iml" filepath="H:\NanoDegree scolarship projects\Popular movie\popularMovie.iml" />
     </modules>
   </component>
 </project>

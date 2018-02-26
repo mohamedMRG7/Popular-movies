@@ -27,7 +27,7 @@ public class NetworkUtilies {
 
 
 
-    private static String getConnectonResponse(String sortby)
+    public static String getConnectonResponse(String sortby)
     {
 
         HttpURLConnection connection=null;
@@ -57,43 +57,6 @@ public class NetworkUtilies {
     }
 
 
-    public static void MovieDpresponse(String sort ,JsonRespons jsonRespons)
-    {
-        new Response(jsonRespons).execute(sort);
-    }
 
-
-    static class Response extends AsyncTask<String ,Void,String>
-    {
-        JsonRespons jsonRespons;
-
-        public Response(JsonRespons jsonRespons) {
-            this.jsonRespons = jsonRespons;
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-           String sort=strings[0];
-           String jsonresponse= getConnectonResponse(sort);
-
-            if (jsonresponse!=null)
-                return jsonresponse;
-            else
-                return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            jsonRespons.response(s);
-
-        }
-    }
-
-
-    public  interface JsonRespons
-    {
-        void response(String jsonString);
-    }
 
 }

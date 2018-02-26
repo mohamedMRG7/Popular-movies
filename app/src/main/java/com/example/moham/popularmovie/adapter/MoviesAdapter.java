@@ -13,6 +13,9 @@ import com.example.moham.popularmovie.dp_response.JsonUtilies;
 import com.example.moham.popularmovie.movie.MovieDetails;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by moham on 2/19/2018.
  */
@@ -20,12 +23,12 @@ import com.squareup.picasso.Picasso;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieadapterViewholder>{
 
 
-    private onitemClick onitemClick;
+    private OnItemClick OnItemClick;
     private String jsonString;
     private Context context;
 
-    public MoviesAdapter(MoviesAdapter.onitemClick onitemClick, String jsonString,Context context) {
-        this.onitemClick = onitemClick;
+    public MoviesAdapter(OnItemClick OnItemClick, String jsonString, Context context) {
+        this.OnItemClick = OnItemClick;
         this.jsonString =jsonString;
         this.context=context;
     }
@@ -45,7 +48,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movieadapt
         MovieDetails details= JsonUtilies.getmovieDetails(jsonString,position);
 
         Picasso.with(context).load(details.getPoster()).into(holder.poster);
-        holder.moviename.setText(details.getTitle());
+        holder.movieName.setText(details.getTitle());
 
 
     }
@@ -57,13 +60,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movieadapt
 
     class MovieadapterViewholder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        ImageView poster;
-        TextView moviename;
+
+        @BindView(R.id.img_moiveposter)ImageView poster;
+        @BindView(R.id.tv_moviename)TextView movieName;
 
         public MovieadapterViewholder(View itemView) {
             super(itemView);
-        poster=itemView.findViewById(R.id.img_moiveposter);
-        moviename=itemView.findViewById(R.id.tv_moviename);
+
+            ButterKnife.bind(this,itemView);
+
         itemView.setOnClickListener(this);
 
         }
@@ -72,16 +77,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movieadapt
         public void onClick(View view) {
 
             int positon=getAdapterPosition();
-            onitemClick.onclick(positon);
+            OnItemClick.onClick(positon);
 
         }
     }
 
 
 
-   public interface  onitemClick
+   public interface OnItemClick
     {
-         void onclick(int position);
+         void onClick(int position);
     }
 
 }
