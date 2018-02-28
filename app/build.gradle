@@ -8,7 +8,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
+        //TODO add your api key at gradle.properties befor run
         buildConfigField("String","API_KEY",API_KEY)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

@@ -24,6 +24,13 @@
 
         <activity android:name=".MovieDetailsActivity"
             android:parentActivityName=".MainActivity"/>
+
+
+        <provider
+            android:authorities="com.example.moham.popularmovie"
+            android:name=".contentProvider.FavourteTaskContentProvider"
+            android:exported="true"
+            />
     </application>
 
 </manifest>

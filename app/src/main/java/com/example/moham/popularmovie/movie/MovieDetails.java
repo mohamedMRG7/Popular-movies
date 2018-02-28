@@ -1,9 +1,8 @@
 package com.example.moham.popularmovie.movie;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 
 /**
  * Created by moham on 2/20/2018.
@@ -15,15 +14,53 @@ public class MovieDetails implements Parcelable {
     private String title;
     private String poster;
     private String overview;
-    private String user_rating;
+    private String userRating;
     private String date;
+    private String id;
 
-    public MovieDetails(String title, String poster, String overview, String user_rating, String date) {
+    private String trialName;
+    private Uri trialLinke;
+
+    private String reviewrName;
+    private String review;
+
+    public MovieDetails(String title, String poster, String overview, String userRating, String date, String id) {
         this.title = title;
         this.poster = poster;
         this.overview = overview;
-        this.user_rating = user_rating;
+        this.userRating = userRating;
         this.date = date;
+        this.id=id;
+    }
+
+    public MovieDetails(String trialName, Uri trialLinke) {
+        this.trialName = trialName;
+        this.trialLinke = trialLinke;
+    }
+
+    public MovieDetails(String reviewrName, String review) {
+        this.reviewrName = reviewrName;
+        this.review = review;
+    }
+
+    public String getReviewrName() {
+        return reviewrName;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public String getTrialName() {
+        return trialName;
+    }
+
+    public Uri getTrialLinke() {
+        return trialLinke;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -50,12 +87,12 @@ public class MovieDetails implements Parcelable {
         this.overview = overview;
     }
 
-    public String getUser_rating() {
-        return user_rating;
+    public String getUserRating() {
+        return userRating;
     }
 
-    public void setUser_rating(String user_rating) {
-        this.user_rating = user_rating;
+    public void setUserRating(String userRating) {
+        this.userRating = userRating;
     }
 
     public String getDate() {
@@ -77,19 +114,21 @@ public class MovieDetails implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.poster);
         dest.writeString(this.overview);
-        dest.writeString(this.user_rating);
+        dest.writeString(this.userRating);
         dest.writeString(this.date);
+        dest.writeString(this.id);
     }
 
     protected MovieDetails(Parcel in) {
         this.title = in.readString();
         this.poster = in.readString();
         this.overview = in.readString();
-        this.user_rating = in.readString();
+        this.userRating = in.readString();
         this.date = in.readString();
+        this.id = in.readString();
     }
 
-    public static final Parcelable.Creator<MovieDetails> CREATOR = new Parcelable.Creator<MovieDetails>() {
+    public static final Creator<MovieDetails> CREATOR = new Creator<MovieDetails>() {
         @Override
         public MovieDetails createFromParcel(Parcel source) {
             return new MovieDetails(source);

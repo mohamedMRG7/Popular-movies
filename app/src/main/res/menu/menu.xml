@@ -14,5 +14,11 @@
         app:showAsAction="never"
         android:title="@string/show_most_rated_movies"
         />
+    <item
+        android:id="@+id/menu_favourite"
+        android:orderInCategory="3"
+        app:showAsAction="never"
+        android:title="@string/show_your_favourite_movies"
+        />
 
 </menu>

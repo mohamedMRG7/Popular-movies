@@ -79,9 +79,44 @@
                 app:layout_constraintTop_toBottomOf="@id/date"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:id="@+id/trials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:text="@string/trailers"
+                app:layout_constraintTop_toBottomOf="@id/tv_releasedate"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_trialers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/trials"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
 
-
+            <TextView
+                android:id="@+id/reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@string/reviews"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                app:layout_constraintTop_toBottomOf="@id/rv_trialers"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/reviews"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
         </android.support.constraint.ConstraintLayout>
 
 

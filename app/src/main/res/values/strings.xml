@@ -5,4 +5,10 @@
     <string name="release_date">Release Date</string>
     <string name="show_most_popular_movies">Show most popular movies</string>
     <string name="show_most_rated_movies">Show most rated movies</string>
+    <string name="trailers">Trailers And Related Videos</string>
+    <string name="noconnectionmessage">Please check your internet connecton and try again</string>
+    <string name="detailsnoconnectionmessage">Please check your internet connecton to see all movie data</string>
+
+    <string name="reviews">Reviews</string>
+    <string name="show_your_favourite_movies">Show your favourite movies</string>
 </resources>
