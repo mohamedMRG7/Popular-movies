@@ -59,8 +59,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements BackGroun
         details=  getIntent().getParcelableExtra(MainActivity.MOVIE_INTENT_KEY);
 
 
-        trialLayoutManage =new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        reviewLayoutManager =new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        trialLayoutManage =new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        reviewLayoutManager =new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
 
 
         if (savedInstanceState !=null)
