@@ -3,10 +3,13 @@ package com.example.moham.popularmovie;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Parcelable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,15 +41,38 @@ public class MovieDetailsActivity extends AppCompatActivity implements BackGroun
     @BindView(R.id.rv_reviews)RecyclerView reviewsList;
     @BindView(R.id.trials)TextView trailertitle;
     @BindView(R.id.reviews)TextView reviewstitle;
-
+    @BindView(R.id.sc_scroll) NestedScrollView scrollView;
+    private  final String KEY_TRAILPOSITION ="trailerpos";
+    private  final String KEY_REVIEWPOSITION ="reviewpos";
+    private  final String KEY_SCROLLVIEWPOSITION ="scrollviewpos";
+    private LinearLayoutManager trialLayoutManage;
+    Parcelable position;
     private MovieDetails details;
+    private LinearLayoutManager reviewLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
         ButterKnife.bind(this);
+
         details=  getIntent().getParcelableExtra(MainActivity.MOVIE_INTENT_KEY);
+
+
+        trialLayoutManage =new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        reviewLayoutManager =new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+
+
+        if (savedInstanceState !=null)
+        {
+            trialLayoutManage.onRestoreInstanceState(savedInstanceState.getParcelable(KEY_TRAILPOSITION));
+
+            reviewLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(KEY_REVIEWPOSITION));
+
+            scrollView.scrollTo(0,savedInstanceState.getInt(KEY_SCROLLVIEWPOSITION));
+        }
+
+
 
 
         setTitle(details.getTitle());
@@ -75,20 +101,45 @@ public class MovieDetailsActivity extends AppCompatActivity implements BackGroun
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Parcelable trailerpos=trialLayoutManage.onSaveInstanceState();
+        Parcelable reviewpos=reviewLayoutManager.onSaveInstanceState();
+        int scrollpos=scrollView.getVerticalScrollbarPosition();
+
+        outState.putParcelable(KEY_TRAILPOSITION, trailerpos);
+        outState.putParcelable(KEY_REVIEWPOSITION, reviewpos);
+        outState.putInt(KEY_SCROLLVIEWPOSITION,scrollpos);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+
+    }
+
+
 
 
     private void setUpTrailersRecyclerView(String jsonSting)
     {
         TrialersAdapter adapter=new TrialersAdapter(jsonSting,this);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        trailersList.setLayoutManager(layoutManager);
-        trailersList.setAdapter(adapter);}
+
+        trailersList.setLayoutManager(trialLayoutManage);
+        trailersList.setAdapter(adapter);
+
+    }
 
     private void setUpReviewsRecyclerView(String jsonString)
     {
         ReviewAdapter adapter=new ReviewAdapter(jsonString);
-        LinearLayoutManager layoutManage=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        reviewsList.setLayoutManager(layoutManage);
+
+        reviewsList.setLayoutManager(reviewLayoutManager);
         reviewsList.setAdapter(adapter);
     }
 

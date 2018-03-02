@@ -3,7 +3,6 @@ package com.example.moham.popularmovie.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movieadapt
     @Override
     public void onBindViewHolder(MovieadapterViewholder holder, int position) {
 
-        if (tag.equals(MainActivity.RESOPNSE_TAG)) {
+        if (tag.equals(MainActivity.POPULAR_TAG)) {
             MovieDetails details = JsonUtilies.getmovieDetails(jsonString, position);
             Picasso.with(context).load(details.getPoster()).into(holder.poster);
             holder.movieName.setText(details.getTitle());
@@ -80,7 +79,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movieadapt
 
     @Override
     public int getItemCount() {
-        if (tag.equals(MainActivity.RESOPNSE_TAG))
+        if (tag.equals(MainActivity.POPULAR_TAG))
             return JsonUtilies.getMoviesCount(jsonString);
 
          if (tag.equals(MainActivity.SQLITE_TAG))
@@ -108,7 +107,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.Movieadapt
 
             int positon=getAdapterPosition();
             MovieDetails details =null;
-            if (tag.equals(MainActivity.RESOPNSE_TAG)) {
+            if (tag.equals(MainActivity.POPULAR_TAG)) {
                  details = JsonUtilies.getmovieDetails(jsonString, positon);
             }else if (tag.equals(MainActivity.SQLITE_TAG))
             {

@@ -22,21 +22,45 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
     private RecyclerView movies;
     private MoviesAdapter adapter;
     private final int numberOfColumns=2;
-    private String tag=RESOPNSE_TAG;
-    public static final String RESOPNSE_TAG="response";
+    private String tag= POPULAR_TAG;
+    public static final String POPULAR_TAG ="popular";
+    public static final String MOSTRATED_TAG ="mostrated";
     public static final String SQLITE_TAG="sqlite";
     public static final String MOVIE_INTENT_KEY ="movie";
+    private final String GRIDE_POSITION="position";
+    private String TAG_KEY="tagkey";
+    GridLayoutManager layoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        layoutManager = new GridLayoutManager(this, numberOfColumns);
+
+
+        if (savedInstanceState!=null) {
+            layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(GRIDE_POSITION));
+            tag=savedInstanceState.getString(TAG_KEY);
+        }
+
 
      if (!NetworkUtilies.API_KEY.isEmpty())
-     {   if (CheckConnection.isOnline(this))
-         BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_POPULAR, this,NetworkUtilies.MOVIELISET_TAG);
+     {
+         if (CheckConnection.isOnline(this)) {
+           if (tag.equals(SQLITE_TAG)) {
+              Cursor cursor = getContentResolver().query(ContentProviderContract.FavouriteEntry.CONTENT_URI
+                        , null, null, null, null);
+                setupMoviesGridshow(cursor);
 
-        else Toast.makeText(this, R.string.noconnectionmessage,Toast.LENGTH_LONG).show();
+          }
+          if (tag.equals(POPULAR_TAG))
+                BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_POPULAR, this, NetworkUtilies.MOVIELISET_TAG);
+
+          if (tag.equals(MOSTRATED_TAG))
+               BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_TOPRATED, this, NetworkUtilies.MOVIELISET_TAG);
+     }
+
+         else Toast.makeText(this, R.string.noconnectionmessage,Toast.LENGTH_LONG).show();
 
 
      }else Toast.makeText(this,"Please add your api key and try again ",Toast.LENGTH_LONG).show();
@@ -54,14 +78,25 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
             setupMoviesGridshow(cursor);
 
         }
+
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(GRIDE_POSITION,layoutManager.onSaveInstanceState());
+        outState.putString(TAG_KEY,tag);
     }
 
     private void setupMoviesGridshow(String json)
     {
 
             movies = findViewById(R.id.rv_movieslist);
-            adapter = new MoviesAdapter(this, json,this,RESOPNSE_TAG);
-            GridLayoutManager layoutManager = new GridLayoutManager(this, numberOfColumns);
+            adapter = new MoviesAdapter(this, json,this, POPULAR_TAG);
+
             movies.setLayoutManager(layoutManager);
             movies.setAdapter(adapter);
 
@@ -95,8 +130,8 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
 
 
         if (jsonString!=null) {
-
                 setupMoviesGridshow(jsonString);
+
 
         }
             else
@@ -120,11 +155,11 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
         switch (id) {
             case R.id.menu_popular:
                 BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_POPULAR,this,NetworkUtilies.MOVIELISET_TAG);
-                tag=RESOPNSE_TAG;
+                tag= POPULAR_TAG;
                 break;
             case R.id.menu_rate:
                 BackGroundTask.MovieDpresponse(NetworkUtilies.SORT_TOPRATED,this,NetworkUtilies.MOVIELISET_TAG);
-                tag=RESOPNSE_TAG;
+                tag= MOSTRATED_TAG;
                 break;
 
             case R.id.menu_favourite:
